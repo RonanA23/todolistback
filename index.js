@@ -1,6 +1,7 @@
 //routes,controllers,models
 const express=require('express')
 const todoRoutes=require('./routes/todoroutes')
+const userroutes=require('./routes/userroutes')
 const dotenv=require('dotenv').config()
 const mongoose=require('mongoose')
 const cors=require('cors')
@@ -18,6 +19,7 @@ app.get('/',(req,res)=>{
 })
 
 app.use('/api/todos',todoRoutes)
+app.use('/api/user',userroutes)
 
 mongoose.connect(process.env.MONGO_URL)
 .then(()=>{
