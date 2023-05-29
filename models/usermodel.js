@@ -24,7 +24,7 @@ userSchema.statics.login=async function(email,password){
     if(!user){
         throw Error('Incorrect Email')
     }
-    const match=bcrypt.compare(password,user.password)
+    const match=await bcrypt.compare(password,user.password)
     if(!match){
         throw Error('Incorrect password')
 
@@ -33,7 +33,6 @@ userSchema.statics.login=async function(email,password){
 }
 
 userSchema.statics.signup=async function(email,password){
-    console.log('sign up staticc called')
     if(!email||!password){
         throw Error('ALl fields must be filled')
     }
@@ -47,10 +46,9 @@ userSchema.statics.signup=async function(email,password){
     if(exists){
         throw Error('Email already in use')
     }
-    const salt=bcrypt.genSalt(10)
-    const hash=await bcrypt.hash(password,salt)
+    const salt=await bcrypt.genSalt(10)
+    const hash= await bcrypt.hash(password,salt)
     const user=await this.create({email,password:hash})
-    console.log('returning user in static')
     return user
 }
 

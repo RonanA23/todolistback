@@ -5,6 +5,7 @@ const todo=require('../models/todomodel')
 
 
 const getTodos=async(req,res)=>{
+    console.log('fetching todos in controller')
     const todos=await todo.find({}).sort({createdAt:-1})
     res.status(200).json(todos)
 }
