@@ -5,21 +5,26 @@ const todo=require('../models/todomodel')
 
 
 const getTodos=async(req,res)=>{
-    console.log('fetching todos in controller')
-    const todos=await todo.find({}).sort({createdAt:-1})
+    console.log('req headers',req.headers)
+    const user_id=req.user._id
+    const todos=await todo.find({user_id}).sort({createdAt:-1})
     res.status(200).json(todos)
+
 }
 
 const createtodo=async(req,res)=>{
+    const user_id=req.user._id
     const {title}=req.body
-    try{const newtodo= await todo.create({title})
+    try{const newtodo= await todo.create({title,user_id})
     res.status(201).json(newtodo)
+   
     }
     catch(error){
         res.status(400).json({message:error.message})
     }}
 
 const deletetodo=async(req,res)=>{
+    console.log('deleting todos in controller')
     const {id}=req.params
     if(!mongoose.Types.ObjectId.isValid(id)){
         return res.status(400).json({error:'No such todo'})

@@ -6,6 +6,7 @@ const dotenv=require('dotenv').config()
 const mongoose=require('mongoose')
 const cors=require('cors')
 const { testWare } = require('./middleware/testWare')
+const requireAuth = require('./middleware/requireAuth')
 //const {testWare} = require('./middleware/testWare')
 const PORT= process.env.PORT
 
@@ -19,8 +20,8 @@ app.use(cors({
 app.get('/',(req,res)=>{
     res.json({mssg:'we are receving you todolist'})
 })
-console.log('index log')
-app.use('/api/todos',testWare,todoRoutes)
+
+app.use('/api/todos',requireAuth,todoRoutes)
 app.use('/api/user',userroutes)
 
 mongoose.connect(process.env.MONGO_URL)

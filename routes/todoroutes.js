@@ -6,11 +6,10 @@ const {testWare} = require('../middleware/testWare')
 const router=express.Router()
 
 
-router.use(requireAuth)
-router.use(testWare)
+//router.use(requireAuth)
+//router.use(testWare)
 
-
-router.get('/',testWare,getTodos)
+router.get('/',requireAuth,getTodos)
 
 router.post('/',createtodo)
 
