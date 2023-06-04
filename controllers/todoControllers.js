@@ -5,7 +5,7 @@ const todo=require('../models/todomodel')
 
 
 const getTodos=async(req,res)=>{
-    console.log('req headers',req.headers)
+    console.log('fetching todos once')
     const user_id=req.user._id
     const todos=await todo.find({user_id}).sort({createdAt:-1})
     res.status(200).json(todos)
